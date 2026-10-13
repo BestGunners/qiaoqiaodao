@@ -48,103 +48,35 @@
   }
 }
 
-/* ---------- 鼠标特效：自绘光标 + 火花（CURSOFX） ---------- */
-html.cursor-fx-on,
-html.cursor-fx-on * {
-  cursor: none !important;
-}
-
-.cursor-fx {
+/* ---------- 悬停小星星：鼠标移到能点的地方，右上角弹一颗小星星 ---------- */
+.hover-star {
   position: fixed;
-  inset: 0;
-  z-index: 9999;
+  z-index: 40;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.18s ease;
-  --dot-color: #4f9cf9;
+  background: linear-gradient(135deg, #ffe08a, #ffb35c);
+  clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
+  animation: hover-star-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.cursor-fx-live {
-  opacity: 1;
-}
-
-.cursor-fx-dot,
-.cursor-fx-ring {
-  position: absolute;
-  top: 0;
-  left: 0;
-  will-change: transform;
-}
-
-.cursor-fx-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: radial-gradient(circle at 35% 35%, #ffffff, var(--dot-color) 72%);
-  box-shadow: 0 0 10px rgba(79, 156, 249, 0.65);
-  transform: translate3d(calc(var(--cx, 0px) - 50%), calc(var(--cy, 0px) - 50%), 0);
-}
-
-.cursor-fx-ring {
-  width: 38px;
-  height: 38px;
-  border: 2px solid rgba(79, 156, 249, 0.5);
-  border-radius: 999px;
-  background: rgba(79, 156, 249, 0.1);
-  transform: translate3d(calc(var(--cx, 0px) - 50%), calc(var(--cy, 0px) - 50%), 0)
-    scale(var(--cs, 1));
-  transition:
-    width 0.18s ease,
-    height 0.18s ease,
-    border-color 0.18s ease,
-    background-color 0.18s ease,
-    border-radius 0.18s ease;
-}
-
-.cursor-fx[data-mode='action'] {
-  --dot-color: #ff9f43;
-}
-
-.cursor-fx[data-mode='action'] .cursor-fx-ring {
-  border-color: rgba(255, 159, 67, 0.92);
-  background: rgba(255, 159, 67, 0.18);
-  box-shadow: 0 0 18px rgba(255, 159, 67, 0.35);
-}
-
-.cursor-fx[data-mode='text'] {
-  --dot-color: #7c5cf5;
-}
-
-.cursor-fx[data-mode='text'] .cursor-fx-ring {
-  width: 12px;
-  height: 40px;
-  border-radius: 6px;
-  border-color: rgba(124, 92, 245, 0.9);
-  background: rgba(124, 92, 245, 0.16);
-}
-
-.cursor-fx-spark {
-  position: absolute;
-  border-radius: 999px;
-  background: var(--dot-color);
-  animation: cursor-fx-spark 620ms ease-out forwards;
-}
-
-@keyframes cursor-fx-spark {
-  from {
-    transform: translate3d(-50%, -50%, 0) scale(1);
-    opacity: 0.9;
+@keyframes hover-star-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-40deg);
   }
 
-  to {
-    transform: translate3d(calc(-50% + var(--sx, 0px)), calc(-50% + var(--sy, 0px)), 0) scale(0.2);
+  45% {
+    opacity: 1;
+    transform: scale(1.15) rotate(8deg);
+  }
+
+  100% {
     opacity: 0;
+    transform: scale(0.6) translateY(-10px) rotate(40deg);
   }
 }
 
 @media (hover: none) {
-  html.cursor-fx-on,
-  html.cursor-fx-on * {
-    cursor: auto !important;
+  .hover-star {
+    display: none;
   }
 }

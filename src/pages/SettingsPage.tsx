@@ -390,8 +390,8 @@ const toggleCursorFx = useSettingsStore((state) => state.toggleCursorFx)
 
         <div className="border-t border-brand-100 pt-4">
           <ToggleRow
-            label="鼠标特效"
-            description="光标会跟着鼠标走，移到按钮上会变色，还会撒小火花"
+            label="悬停小星星"
+            description="鼠标移到按钮、键盘这些小东西上，会弹一颗小星星"
             checked={cursorFxEnabled}
             onChange={toggleCursorFx}
           />
