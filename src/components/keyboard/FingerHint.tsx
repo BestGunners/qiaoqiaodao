@@ -22,7 +22,7 @@ export function FingerHint({ char, level, onSkip, message, className }: FingerHi
   return (
     <div
       className={cn(
-        'flex h-[62px] flex-nowrap items-center gap-2 overflow-hidden rounded-kid border border-surface-line bg-white px-3 py-2 shadow-[0_1px_2px_rgba(18,32,58,0.04)]',
+        'flex h-[3.875rem] flex-nowrap items-center gap-2 overflow-hidden rounded-kid border border-surface-line bg-white px-3 py-2 shadow-[0_1px_2px_rgba(18,32,58,0.04)]',
         className,
       )}
     >

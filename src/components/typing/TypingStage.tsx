@@ -229,16 +229,16 @@ export function TypingStage({ lesson, child, onFinish }: TypingStageProps) {
         </div>
 
         {hasStage ? (
-          <CodeStage part={activePart} discovered={discovered} className="h-[186px] overflow-hidden" />
+          <CodeStage part={activePart} discovered={discovered} className="h-[11.625rem] overflow-hidden" />
         ) : lesson.kind === 'intro' ? (
-          <Card className="h-[210px] space-y-2 overflow-hidden p-3">
+          <Card className="h-[13.125rem] space-y-2 overflow-hidden p-3">
             <div className="text-[11px] font-extrabold text-ink-soft">
               手指分工 · 亮起来的就是该用的手指
             </div>
             <FingerMap targetChar={targetChar} />
           </Card>
         ) : (
-          <Card className="h-[186px] space-y-2 overflow-hidden p-3">
+          <Card className="h-[11.625rem] space-y-2 overflow-hidden p-3">
             <div className="text-[11px] font-extrabold text-ink-soft">本关重点</div>
             <div className="flex flex-wrap gap-1.5">
               {lesson.focusChars.map((char) => (

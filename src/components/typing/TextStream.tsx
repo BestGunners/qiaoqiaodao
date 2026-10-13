@@ -63,11 +63,12 @@ export function TextStream({
         // 固定高度：不管这一题有多长，下面的键盘都不会被顶来顶去；
         // 有拼音行（中文岛）时留得更高一点，拼音放大后也不会被裁掉
         'flex flex-wrap content-center items-end justify-center gap-x-1 gap-y-1 overflow-hidden rounded-kid border border-surface-line bg-white px-5 py-4 font-extrabold leading-tight shadow-[0_1px_2px_rgba(18,32,58,0.04)]',
+        // 用 rem 而不是 px：设置里放大字号时，文字框会一起变高，不会把字裁掉
         hasPinyinRow
-          ? 'h-[176px] sm:h-[252px]'
+          ? 'h-[11rem] sm:h-[15.75rem]'
           : text.length > 30
-            ? 'h-[196px] sm:h-[236px]'
-            : 'h-[164px]',
+            ? 'h-[12.25rem] sm:h-[14.75rem]'
+            : 'h-[10.25rem]',
         text.length > 28 ? 'text-3xl' : text.length > 18 ? 'text-4xl' : 'text-4xl sm:text-5xl',
         variant === 'code' ? 'font-mono tracking-tight' : 'tracking-wide',
       )}
@@ -106,7 +107,7 @@ export function TextStream({
                 ))}
               </span>
             ) : (
-              <span className="mb-1 h-[20px] sm:h-[22px]" aria-hidden />
+              <span className="mb-1 h-[1.25rem] sm:h-[1.375rem]" aria-hidden />
             )}
 
             <span

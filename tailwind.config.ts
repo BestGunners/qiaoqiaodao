@@ -35,8 +35,9 @@ export default {
         },
       },
       fontFamily: {
-        kid: ['"Baloo 2"', '"Noto Sans SC Variable"', '"Microsoft YaHei"', 'system-ui', 'sans-serif'],
-        display: ['"ZCOOL KuaiLe"', '"Baloo 2"', '"Noto Sans SC Variable"', 'system-ui', 'sans-serif'],
+        // 都指向 CSS 变量，这样设置页换字体能立刻生效（见 kid.css）
+        kid: ['var(--font-body)', '"Noto Sans SC Variable"', '"Microsoft YaHei"', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', '"ZCOOL KuaiLe"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'Consolas', 'monospace'],
       },
       borderRadius: {

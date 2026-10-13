@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { BackgroundMusic } from '@/components/fx/BackgroundMusic'
 import RequireChild from '@/components/layout/RequireChild'
+import { useDisplayPreferences } from '@/hooks/useDisplayPreferences'
 import { useGlobalClickSound } from '@/hooks/useGlobalClickSound'
 import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
@@ -16,6 +17,8 @@ import TypingPage from '@/pages/TypingPage'
 export default function App() {
   // 全局点击音效：任何按钮被按下都发一声（设置里可关）
   useGlobalClickSound()
+  // 字体样式与字号：设置里一改，全站立刻跟着变
+  useDisplayPreferences()
 
   return (
     <>

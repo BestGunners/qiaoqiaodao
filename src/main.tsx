@@ -7,7 +7,13 @@ import '@fontsource/baloo-2/latin-700.css'
 import '@fontsource/baloo-2/latin-800.css'
 import '@fontsource-variable/noto-sans-sc/index.css'
 import App from '@/App'
+import { applyDisplayPreferences } from '@/hooks/useDisplayPreferences'
+import { useSettingsStore } from '@/store/settingsStore'
 import '@/index.css'
+
+// 渲染前先把「字体样式 / 字体大小」应用到 <html>，避免打开页面时闪一下默认字号
+const initialSettings = useSettingsStore.getState()
+applyDisplayPreferences(initialSettings.fontStyle, initialSettings.fontScale)
 
 const container = document.getElementById('root')
 

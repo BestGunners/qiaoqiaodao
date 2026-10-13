@@ -9,11 +9,24 @@ import { Mascot } from '@/components/mascot/Mascot'
 import { AVATARS, getAvatar } from '@/data/avatars'
 import { sfx } from '@/engine/sfx'
 import { useChildStore } from '@/store/childStore'
-import { useSettingsStore } from '@/store/settingsStore'
+import { useSettingsStore, type FontStyle } from '@/store/settingsStore'
 import { useCurrentChild } from '@/store/selectors'
 import { cn } from '@/utils/cn'
 
 type PatternStep = 'idle' | 'old' | 'new' | 'confirm'
+
+const FONT_STYLE_OPTIONS: Array<{ value: FontStyle; label: string; description: string }> = [
+  { value: 'rounded', label: '圆润可爱', description: '默认样式：圆圆的字体，标题带一点手写味。' },
+  { value: 'kai', label: '课本楷体', description: '和语文课本一样，笔画最标准，适合认字练字。' },
+  { value: 'hei', label: '端正黑体', description: '干净清楚、笔画最粗，看久了最省力。' },
+]
+
+const FONT_SCALE_PRESETS: Array<{ value: number; label: string }> = [
+  { value: 0.9, label: '小' },
+  { value: 1, label: '标准' },
+  { value: 1.15, label: '大' },
+  { value: 1.3, label: '特大' },
+]
 
 interface ToggleRowProps {
   label: string
@@ -70,6 +83,10 @@ export default function SettingsPage() {
   const clickSoundsEnabled = useSettingsStore((state) => state.clickSoundsEnabled)
   const toggleClickSounds = useSettingsStore((state) => state.toggleClickSounds)
 const bgmEnabled = useSettingsStore((state) => state.bgmEnabled)
+const fontStyle = useSettingsStore((state) => state.fontStyle)
+const setFontStyle = useSettingsStore((state) => state.setFontStyle)
+const fontScale = useSettingsStore((state) => state.fontScale)
+const setFontScale = useSettingsStore((state) => state.setFontScale)
 const toggleBgm = useSettingsStore((state) => state.toggleBgm)
 const bgmVolume = useSettingsStore((state) => state.bgmVolume)
 const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
@@ -288,6 +305,86 @@ const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
             onCancel={() => setPatternStep('idle')}
           />
         ) : null}
+      </Card>
+
+      <Card className="space-y-5">
+        <div className="font-display text-xl font-extrabold">显示</div>
+
+        <div className="space-y-2">
+          <div className="font-extrabold">字体样式</div>
+          <div className="flex flex-wrap gap-2">
+            {FONT_STYLE_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => {
+                  setFontStyle(option.value)
+                  sfx.tap()
+                }}
+                className={cn(
+                  'rounded-xl border px-4 py-2 text-sm font-extrabold transition',
+                  fontStyle === option.value
+                    ? 'border-brand-400 bg-brand-50 text-brand-700 shadow-glow'
+                    : 'border-surface-line bg-white text-ink-soft hover:border-brand-300',
+                )}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs font-bold text-ink-faint">
+            {FONT_STYLE_OPTIONS.find((option) => option.value === fontStyle)?.description}
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="font-extrabold">字体大小</span>
+            <span className="text-sm font-extrabold text-brand-700">
+              {Math.round(fontScale * 100)}%
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs font-extrabold text-ink-faint">A</span>
+            <input
+              type="range"
+              min={85}
+              max={140}
+              step={5}
+              value={Math.round(fontScale * 100)}
+              data-no-click-sound
+              aria-label="字体大小"
+              onChange={(event) => setFontScale(Number(event.target.value) / 100)}
+              className="h-2 flex-1 cursor-pointer accent-brand-500"
+            />
+            <span className="font-mono text-lg font-extrabold text-ink-faint">A</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {FONT_SCALE_PRESETS.map((preset) => (
+              <button
+                key={preset.value}
+                type="button"
+                onClick={() => setFontScale(preset.value)}
+                className={cn(
+                  'rounded-xl border px-3 py-1.5 text-xs font-extrabold transition',
+                  Math.abs(fontScale - preset.value) < 1e-9
+                    ? 'border-brand-400 bg-brand-50 text-brand-700'
+                    : 'border-surface-line bg-white text-ink-soft hover:border-brand-300',
+                )}
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-1 rounded-xl border border-surface-line bg-surface-muted px-4 py-3">
+          <div className="text-[11px] font-extrabold text-ink-soft">预览</div>
+          <div className="font-kid text-base font-extrabold text-ink">
+            敲敲岛 · 你好，小朋友！Aa Bb 123
+          </div>
+          <div className="font-display text-2xl font-extrabold text-brand-700">敲敲岛</div>
+        </div>
       </Card>
 
       <Card className="space-y-5">

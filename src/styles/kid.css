@@ -1,3 +1,20 @@
+/* 字体样式：根字号与字体族都挂在 <html> 上，设置页改这里就全站生效 */
+html {
+  --font-body: 'Baloo 2', 'Noto Sans SC Variable', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-display: 'ZCOOL KuaiLe', 'Baloo 2', 'Noto Sans SC Variable', system-ui, sans-serif;
+}
+
+html[data-font='kai'] {
+  --font-body: 'Kaiti SC', KaiTi, STKaiti, 'Noto Sans SC Variable', serif;
+  --font-display: 'Kaiti SC', KaiTi, STKaiti, 'Noto Sans SC Variable', serif;
+}
+
+html[data-font='hei'] {
+  --font-body: 'Noto Sans SC Variable', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-display: 'Noto Sans SC Variable', 'Microsoft YaHei', system-ui, sans-serif;
+  font-weight: 600;
+}
+
 /* 儿童向动效层：纯 CSS，无额外依赖，并尊重系统的「减少动态效果」设置 */
 
 @keyframes kid-float {

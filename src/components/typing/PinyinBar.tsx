@@ -17,7 +17,7 @@ export function PinyinBar({ task, hideHints = false, onSkip }: PinyinBarProps) {
   // 进阶关（课文长句岛）：一个拼音都不给，只留一个"先跳过"的出口
   if (hideHints) {
     return (
-      <div className="flex h-[46px] flex-nowrap items-center gap-3 overflow-hidden rounded-kid border-2 border-brand-200 bg-white px-4">
+      <div className="flex h-[2.875rem] flex-nowrap items-center gap-3 overflow-hidden rounded-kid border-2 border-brand-200 bg-white px-4">
         <Icon name="target" size={16} className="shrink-0 text-brand-500" />
         <span className="min-w-0 truncate text-xs font-extrabold text-ink-soft">
           这一关不给拼音提示，靠自己把每个字的拼音拼出来
@@ -37,7 +37,7 @@ export function PinyinBar({ task, hideHints = false, onSkip }: PinyinBarProps) {
 
   if (!task) {
     return (
-      <div className="flex h-[46px] items-center gap-2 overflow-hidden rounded-kid border-2 border-brand-100 bg-white/70 px-4">
+      <div className="flex h-[2.875rem] items-center gap-2 overflow-hidden rounded-kid border-2 border-brand-100 bg-white/70 px-4">
         <span className="text-xs font-extrabold text-ink-soft/70">
           遇到中文时，这里会告诉你拼音怎么打
         </span>
