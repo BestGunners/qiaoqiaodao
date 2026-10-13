@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react'
+import { cn } from '@/utils/cn'
 
 /**
  * 界面图标：全站统一的一套线性图标。
@@ -262,7 +263,7 @@ export function Icon({ name, size = 20, filled = false, className, style }: Icon
       strokeWidth={1.8}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={className}
+      className={cn('shrink-0', className)}
       style={style}
       aria-hidden
     >

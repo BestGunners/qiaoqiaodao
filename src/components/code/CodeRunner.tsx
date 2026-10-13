@@ -4,11 +4,11 @@ import { Button } from '@/components/common/Button'
 import { Mascot } from '@/components/mascot/Mascot'
 import { StageCanvas } from '@/components/code/StageCanvas'
 import { StepPlayer } from '@/components/code/StepPlayer'
+import { CodeEditor } from '@/components/code/CodeEditor'
 import { Icon } from '@/components/icons/Icon'
 import { countSceneKinds, resolveFrames, runCpp, type RunCppResult } from '@/engine/cpp'
 import { sfx } from '@/engine/sfx'
 import type { LessonProgram } from '@/data/programs'
-import { cn } from '@/utils/cn'
 
 const SHAPE_LABELS: Record<string, string> = {
   star: '颗星星',
@@ -45,7 +45,6 @@ export function CodeRunner({ lessonLabel, program, onFinish }: CodeRunnerProps) 
   const [runCount, setRunCount] = useState(0)
   const [stepMode, setStepMode] = useState(false)
 
-  const lines = useMemo(() => code.split('\n'), [code])
   const usesCin = /\bcin\b/.test(code)
   const usesKey = /\bkey\s*\(/.test(code)
   const needsInput = usesCin || usesKey
@@ -147,37 +146,20 @@ export function CodeRunner({ lessonLabel, program, onFinish }: CodeRunnerProps) 
             <span className="text-[11px] font-bold text-ink-soft">Ctrl + Enter 运行</span>
           </div>
 
-          <div className="flex">
-            <div className="select-none border-r border-brand-100 bg-brand-50/40 px-2 py-3 text-right font-mono text-xs leading-6 text-ink-soft/60">
-              {lines.map((_, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    'px-1',
-                    errorLine === index + 1 && 'rounded bg-[#ffe9ee] font-extrabold text-[#c2334c]',
-                  )}
-                >
-                  {index + 1}
-                </div>
-              ))}
-            </div>
-            <textarea
-              value={code}
-              spellCheck={false}
-              onChange={(event) => {
-                setCode(event.target.value)
-                setResult(null)
-              }}
-              onKeyDown={(event) => {
-                if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-                  event.preventDefault()
-                  run()
-                }
-              }}
-              rows={Math.max(lines.length, 8)}
-              className="flex-1 resize-none bg-transparent px-3 py-3 font-mono text-sm leading-6 text-ink outline-none"
-            />
-          </div>
+          <CodeEditor
+            value={code}
+            errorLine={errorLine}
+            onChange={(next) => {
+              setCode(next)
+              setResult(null)
+            }}
+            onKeyDown={(event) => {
+              if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                event.preventDefault()
+                run()
+              }
+            }}
+          />
         </div>
 
         <div className="space-y-3">

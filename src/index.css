@@ -80,3 +80,12 @@
     display: none;
   }
 }
+
+/* ---------- 按钮里的图标：让图标和文字永远并排居中，不会被挤成上下两行 ---------- */
+button:has(> svg):not(.flex-col),
+a:has(> svg):not(.flex-col) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}

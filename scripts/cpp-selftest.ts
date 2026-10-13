@@ -3,6 +3,7 @@
  * 运行方式：node scripts/cpp-selftest.ts
  */
 import { runCpp } from '../src/engine/cpp/index.ts'
+import { highlightCpp, tokensToText } from '../src/utils/cppHighlight.ts'
 
 let passed = 0
 const failures: string[] = []
@@ -233,7 +234,35 @@ console.log('\n10. 代码里的中文内容')
   const scene = runCpp('text("你赢了", 20, 40);').scene
   check('舞台上也能写中文', scene[0]?.type === 'text' && scene[0].text === '你赢了', JSON.stringify(scene[0]))
   expectOutput('中文字符串可以用在判断里', 'string k = "小猫";\nif (k == "小猫") {\n  cout << "对啦";\n}', '对啦')
-}console.log(`\n结果：${passed} 项通过，${failures.length} 项失败`)
+}
+
+console.log('\n代码上色（切分不能改动代码本身）')
+{
+  const sample = [
+    '// 注释要单独一色',
+    'int score = 10;',
+    'cout << "得分 " << score;',
+    'if (score >= 10) {',
+    '  star(40 + i * 55, 70);  // 位置',
+    '}',
+    '#include <iostream>',
+  ].join('\n')
+
+  const lines = highlightCpp(sample)
+  check('上色后文字一字不差', tokensToText(lines) === sample)
+  check('整行注释认出来', lines[0]?.[0]?.kind === 'comment')
+  check('行尾注释认出来', lines[4]?.some((token) => token.kind === 'comment') === true)
+  check('类型 int 认出来', lines[1]?.some((token) => token.text === 'int' && token.kind === 'type') === true)
+  check('数字单独一色', lines[1]?.some((token) => token.text === '10' && token.kind === 'number') === true)
+  check('字符串单独一色', lines[2]?.some((token) => token.text === '"得分 "' && token.kind === 'string') === true)
+  check('内置函数 star 认出来', lines[4]?.some((token) => token.text === 'star' && token.kind === 'builtin') === true)
+  check('if 是关键字', lines[3]?.some((token) => token.text === 'if' && token.kind === 'keyword') === true)
+  check('#include 整行一种颜色', lines[6]?.every((token) => token.kind === 'pre') === true)
+
+  const withBlock = highlightCpp('/* 开头\n还在注释里\n*/\nint a = 1;')
+  check('跨行块注释不串色', withBlock[1]?.[0]?.kind === 'comment' && withBlock[3]?.[0]?.kind === 'type')
+}
+console.log(`\n结果：${passed} 项通过，${failures.length} 项失败`)
 if (failures.length > 0) {
   failures.forEach((item) => console.log(` - ${item}`))
   process.exit(1)

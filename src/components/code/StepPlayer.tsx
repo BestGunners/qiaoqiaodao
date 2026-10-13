@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { StageCanvas } from '@/components/code/StageCanvas'
+import { HighlightedLine } from '@/components/code/CodeHighlight'
+import { highlightCpp } from '@/utils/cppHighlight'
 import { Icon } from '@/components/icons/Icon'
 import { Mascot } from '@/components/mascot/Mascot'
 import type { RunCppError, SceneCommand, TraceEntry } from '@/engine/cpp'
@@ -23,6 +25,7 @@ export function StepPlayer({ code, trace, output, scene, error, onExit }: StepPl
   const [autoPlay, setAutoPlay] = useState(false)
 
   const lines = useMemo(() => code.split('\n'), [code])
+  const highlighted = useMemo(() => highlightCpp(code), [code])
   const lastIndex = Math.max(trace.length - 1, 0)
   const entry = trace[Math.min(index, lastIndex)]
   const previous = index > 0 ? trace[index - 1] : undefined
@@ -169,19 +172,19 @@ export function StepPlayer({ code, trace, output, scene, error, onExit }: StepPl
               ))}
             </div>
             <div className="flex-1 py-3 font-mono text-sm leading-6">
-              {lines.map((line, lineIndex) => (
+              {lines.map((_, lineIndex) => (
                 <div
                   key={lineIndex}
                   className={cn(
                     'whitespace-pre px-3',
                     currentLine === lineIndex + 1
-                      ? 'bg-brand-100 font-extrabold text-brand-800'
+                      ? 'bg-brand-100 font-extrabold'
                       : executedLines.has(lineIndex + 1)
-                        ? 'text-ink-soft'
-                        : 'text-ink-soft/45',
+                        ? 'opacity-70'
+                        : 'opacity-40',
                   )}
                 >
-                  {line.length > 0 ? line : ' '}
+                  <HighlightedLine tokens={highlighted[lineIndex] ?? []} />
                 </div>
               ))}
             </div>
