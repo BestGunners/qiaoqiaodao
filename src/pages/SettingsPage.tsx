@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { PatternPad } from '@/components/child/PatternPad'
+import { AvatarFace } from '@/components/child/AvatarFace'
 import { Logo } from '@/components/common/Logo'
 import { Icon } from '@/components/icons/Icon'
 import { Card } from '@/components/common/Card'
 import { AppShell } from '@/components/layout/AppShell'
 import { Mascot } from '@/components/mascot/Mascot'
-import { AVATARS, getAvatar } from '@/data/avatars'
+import { AVATARS, getAvatar, getPatternIcon } from '@/data/avatars'
 import { sfx } from '@/engine/sfx'
 import { useChildStore } from '@/store/childStore'
 import { useSettingsStore, type FontStyle } from '@/store/settingsStore'
@@ -90,6 +91,8 @@ const setFontScale = useSettingsStore((state) => state.setFontScale)
 const toggleBgm = useSettingsStore((state) => state.toggleBgm)
 const bgmVolume = useSettingsStore((state) => state.bgmVolume)
 const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
+const cursorFxEnabled = useSettingsStore((state) => state.cursorFxEnabled)
+const toggleCursorFx = useSettingsStore((state) => state.toggleCursorFx)
 
   const [nicknameDraft, setNicknameDraft] = useState(child?.nickname ?? '')
   const [avatarDraft, setAvatarDraft] = useState(child?.avatarId ?? AVATARS[0].id)
@@ -152,12 +155,7 @@ const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
         <div className="font-display text-xl font-extrabold">我的样子</div>
 
         <div className="flex items-center gap-4">
-          <span
-            className="flex h-16 w-16 items-center justify-center rounded-kid text-4xl"
-            style={{ backgroundColor: `${avatar.color}33` }}
-          >
-            {avatar.emoji}
-          </span>
+          <AvatarFace avatar={avatar} size={64} />
           <div className="min-w-0 flex-1 space-y-2">
             <input
               value={nicknameDraft}
@@ -175,7 +173,7 @@ const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
           </div>
         </div>
 
-        <div className="grid grid-cols-6 gap-2 sm:grid-cols-9">
+        <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
           {AVATARS.map((option) => (
             <button
               key={option.id}
@@ -187,13 +185,13 @@ const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
                 setAvatarDraft(option.id)
               }}
               className={cn(
-                'flex aspect-square items-center justify-center rounded-2xl border-b-4 text-2xl transition sm:text-3xl',
+                'flex aspect-square items-center justify-center rounded-2xl border-b-4 p-1 transition',
                 avatarDraft === option.id
                   ? 'anim-pop-in border-brand-500 bg-brand-50 shadow-pop'
                   : 'border-brand-200 bg-white hover:-translate-y-1',
               )}
             >
-              {option.emoji}
+              <AvatarFace avatar={option} className="h-full w-full" />
             </button>
           ))}
         </div>
@@ -238,9 +236,13 @@ const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
             {child.pattern.map((icon, index) => (
               <span
                 key={`${icon}-${index}`}
-                className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-brand-200 bg-white text-xl"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-brand-200 bg-white"
               >
-                {icon}
+                <Icon
+                  name={getPatternIcon(icon).id}
+                  size={22}
+                  style={{ color: getPatternIcon(icon).color }}
+                />
               </span>
             ))}
           </div>
@@ -384,6 +386,15 @@ const setBgmVolume = useSettingsStore((state) => state.setBgmVolume)
             敲敲岛 · 你好，小朋友！Aa Bb 123
           </div>
           <div className="font-display text-2xl font-extrabold text-brand-700">敲敲岛</div>
+        </div>
+
+        <div className="border-t border-brand-100 pt-4">
+          <ToggleRow
+            label="鼠标特效"
+            description="光标会跟着鼠标走，移到按钮上会变色，还会撒小火花"
+            checked={cursorFxEnabled}
+            onChange={toggleCursorFx}
+          />
         </div>
       </Card>
 

@@ -11,7 +11,88 @@ export interface CodeStageProps {
   className?: string
 }
 
-/** 每种零件对应的小演出，全部用 div + emoji + CSS 动画拼出来，不依赖图片。 */
+/** 舞台小图形：全部用 SVG 画出来，不用 emoji，放大缩小都清清楚楚。 */
+type StageGlyphKind = 'toolbox' | 'flag' | 'arrowDown' | 'door' | 'scale' | 'bubble' | 'gift'
+
+function StageGlyph({
+  kind,
+  color,
+  size = 40,
+  className = 'anim-pop-in',
+}: {
+  kind: StageGlyphKind
+  color: string
+  size?: number
+  className?: string
+}) {
+  const line = {
+    fill: 'none',
+    stroke: color,
+    strokeWidth: 2.4,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  }
+
+  return (
+    <svg viewBox="0 0 48 48" width={size} height={size} className={className} aria-hidden>
+      {kind === 'toolbox' ? (
+        <>
+          <path {...line} d="M6 18h36v22H6z" />
+          <path {...line} d="M6 25h36" />
+          <path {...line} d="M19 18v-5a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v5" />
+          <path {...line} d="M21 25h6v6h-6z" />
+        </>
+      ) : null}
+      {kind === 'flag' ? (
+        <>
+          <path {...line} d="M13 7v34" />
+          <path {...line} fill={color} d="M13 9h22l-5.5 7.5L35 24H13z" />
+        </>
+      ) : null}
+      {kind === 'arrowDown' ? (
+        <>
+          <path {...line} d="M24 9v28" />
+          <path {...line} d="m14 27 10 10 10-10" />
+        </>
+      ) : null}
+      {kind === 'door' ? (
+        <>
+          <path {...line} d="M14 5h22v38H14z" />
+          <path {...line} d="M28 24h.01" strokeWidth={3.6} />
+          <path {...line} d="M12 43h24" />
+        </>
+      ) : null}
+      {kind === 'scale' ? (
+        <>
+          <path {...line} d="M24 7v32" />
+          <path {...line} d="M8 15h32" />
+          <path {...line} d="M8 15 3 27h10z" />
+          <path {...line} d="M40 15 35 27h10z" />
+          <path {...line} d="M16 39h16" />
+        </>
+      ) : null}
+      {kind === 'bubble' ? (
+        <>
+          <path {...line} d="M7 10h24a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H17l-9 7V10z" />
+          <path {...line} d="M13 17h13M13 22h8" />
+        </>
+      ) : null}
+      {kind === 'gift' ? (
+        <>
+          <path {...line} d="M8 20h32v20H8z" />
+          <path {...line} d="M6 14h36v6H6z" />
+          <path {...line} d="M24 14v26" />
+          <path
+            {...line}
+            d="M24 14c-3.6-6-10.4-5.6-10.4-1 0 3.2 5.6 1 10.4 1Zm0 0c3.6-6 10.4-5.6 10.4-1 0 3.2-5.6 1-10.4 1Z"
+          />
+        </>
+      ) : null}
+    </svg>
+  )
+}
+
+/** 每种零件对应的小演出，全部用 div + SVG + CSS 动画拼出来，不依赖图片。 */
 function StageEffect({ part }: { part: CodePart }) {
   const kind = part.effect
   const color = part.color
@@ -80,35 +161,28 @@ function StageEffect({ part }: { part: CodePart }) {
 
     case 'toolbox':
       return (
-        <div className="anim-pop-in text-4xl" aria-hidden>
-          🧰
-        </div>
+        <StageGlyph kind="toolbox" color={color} />
       )
 
     case 'start':
       return (
         <div className="anim-flag flex flex-col items-center">
-          <span className="text-3xl" aria-hidden>
-            🚩
-          </span>
-          <span className="h-6 w-1 rounded" style={{ backgroundColor: color }} />
+          <StageGlyph kind="flag" color={color} size={34} />
         </div>
       )
 
     case 'nextline':
       return (
         <div className="flex flex-col items-center">
-          <span className="anim-drop text-2xl" style={{ color }} aria-hidden>
-            ⬇
-          </span>
+          <StageGlyph kind="arrowDown" color={color} size={30} className="anim-drop" />
           <span className="h-1.5 w-10 rounded" style={{ backgroundColor: color }} />
         </div>
       )
 
     case 'exit':
       return (
-        <div className="anim-door text-4xl" aria-hidden>
-          🚪
+        <div className="anim-door">
+          <StageGlyph kind="door" color={color} size={40} className="" />
         </div>
       )
 
@@ -133,8 +207,8 @@ function StageEffect({ part }: { part: CodePart }) {
 
     case 'compare':
       return (
-        <div className="anim-flag text-3xl" aria-hidden>
-          ⚖️
+        <div className="anim-flag">
+          <StageGlyph kind="scale" color={color} size={34} className="" />
         </div>
       )
 
@@ -144,10 +218,10 @@ function StageEffect({ part }: { part: CodePart }) {
           {[0, 1].map((index) => (
             <span
               key={index}
-              className="anim-bubble absolute bottom-0 text-xl"
+              className="anim-bubble absolute bottom-0"
               style={{ left: 6 + index * 16, animationDelay: `${index * 0.25}s` }}
             >
-              💬
+              <StageGlyph kind="bubble" color={color} size={index === 0 ? 28 : 22} className="" />
             </span>
           ))}
         </div>
@@ -157,9 +231,7 @@ function StageEffect({ part }: { part: CodePart }) {
       return (
         <div className="flex items-center gap-1 font-mono text-2xl font-extrabold" style={{ color }}>
           <span>(</span>
-          <span className="anim-pop-in text-lg" aria-hidden>
-            🎁
-          </span>
+                    <StageGlyph kind="gift" color={color} size={30} />
           <span>)</span>
         </div>
       )

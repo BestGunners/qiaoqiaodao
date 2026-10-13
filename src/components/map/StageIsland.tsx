@@ -21,7 +21,7 @@ export function StageIsland({ stage, progress, onSelectLesson }: StageIslandProp
     return (
       <div className="flex items-center justify-between gap-3 rounded-kid border-2 border-dashed border-brand-200 bg-white/50 px-5 py-4">
         <div className="flex items-center gap-3">
-          <span className="text-3xl grayscale">{stage.emoji}</span>
+          <Icon name={stage.icon} size={28} className="text-ink-faint" />
           <span className="text-lg font-extrabold text-ink-soft">
             第 {stageNumber(STAGES, stage.id)} 岛 · {stage.title}
           </span>
@@ -39,11 +39,11 @@ export function StageIsland({ stage, progress, onSelectLesson }: StageIslandProp
         <div className="flex items-center gap-3">
           <span
             className={cn(
-              'flex h-14 w-14 items-center justify-center rounded-kid bg-gradient-to-br text-3xl',
+              'flex h-14 w-14 items-center justify-center rounded-kid bg-gradient-to-br text-white',
               stage.gradient,
             )}
           >
-            {stage.emoji}
+            <Icon name={stage.icon} size={28} />
           </span>
           <div className="leading-tight">
             <div className="font-display text-xl font-extrabold">

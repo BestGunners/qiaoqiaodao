@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 
 /**
- * 界面图标：统一的线性图标，取代界面上的 emoji。
- * emoji 只保留在「内容」里（头像、图案密码、徽章、岛屿、舞台演出），
- * 界面骨架一律用这套线性图标，看起来更简洁、更科技。
+ * 界面图标：全站统一的一套线性图标。
+ * 头像、图形密码、徽章、岛屿、舞台演出都用它，所以整个网站看不到 emoji，
+ * 看起来更简洁、更科技，同时保留一点童趣。
  */
 export type IconName =
   | 'map'
@@ -39,6 +39,14 @@ export type IconName =
   | 'sparkle'
   | 'book'
   | 'user'
+  | 'home'
+  | 'rocket'
+  | 'medal'
+  | 'mountain'
+  | 'leaf'
+  | 'braces'
+  | 'pencil'
+  | 'droplet'
 
 const PATHS: Record<IconName, ReactNode> = {
   map: (
@@ -184,6 +192,53 @@ const PATHS: Record<IconName, ReactNode> = {
       <path d="M5 20.2c0-3.2 3.1-5.8 7-5.8s7 2.6 7 5.8" />
     </>
   ),
+  home: (
+    <>
+      <path d="M3.6 11.4 12 4.4l8.4 7" />
+      <path d="M6.2 10.2v9.4h11.6v-9.4" />
+      <path d="M10.4 19.6v-5.2h3.2v5.2" />
+    </>
+  ),
+  rocket: (
+    <>
+      <path d="M12 2.6c3.4 2.4 5 6.3 4.2 10.9l-4.2 2.9-4.2-2.9C7 8.9 8.6 5 12 2.6Z" />
+      <circle cx="12" cy="9.6" r="1.8" />
+      <path d="m8.4 16.2-2.4 3.9 3.3-1M15.6 16.2l2.4 3.9-3.3-1" />
+    </>
+  ),
+  medal: (
+    <>
+      <circle cx="12" cy="15" r="5.2" />
+      <path d="M8.8 10.6 6.4 2.8h3.8l1.8 4.6M15.2 10.6 17.6 2.8h-3.8l-1.8 4.6" />
+    </>
+  ),
+  mountain: (
+    <>
+      <path d="M2.6 19.4h18.8L14.2 7.4l-3.6 6.4-2.2-3.6-5.8 9.2Z" />
+      <path d="m10.6 13.8 1.6 2.6h-3.2" />
+    </>
+  ),
+  leaf: (
+    <>
+      <path d="M5 19.4C4 12 8 5.4 19.4 4.6c.6 10.4-5 15-14.4 14.8Z" />
+      <path d="M5.6 19C9.2 14.6 13.2 11.4 17.8 9.4" />
+    </>
+  ),
+  braces: (
+    <>
+      <path d="M9.6 3.6C7.2 3.6 7.4 6 7.4 8.2c0 2.1-.4 3.8-2.6 3.8 2.2 0 2.6 1.7 2.6 3.8 0 2.2-.2 4.6 2.2 4.6" />
+      <path d="M14.4 3.6c2.4 0 2.2 2.4 2.2 4.6 0 2.1.4 3.8 2.6 3.8-2.2 0-2.6 1.7-2.6 3.8 0 2.2.2 4.6-2.2 4.6" />
+    </>
+  ),
+  pencil: (
+    <>
+      <path d="M4.6 19.6 5.8 14 16.4 3.4a2.4 2.4 0 0 1 3.4 3.4L9.2 17.6l-4.6 2Z" />
+      <path d="m14.6 5.2 3.4 3.4" />
+    </>
+  ),
+  droplet: (
+    <path d="M12 3.4c3.2 4 5.6 6.9 5.6 9.8a5.6 5.6 0 0 1-11.2 0c0-2.9 2.4-5.8 5.6-9.8Z" />
+  ),
 }
 
 export interface IconProps {
@@ -192,9 +247,11 @@ export interface IconProps {
   /** 实心（用于星星这类需要填充的图标） */
   filled?: boolean
   className?: string
+  /** 需要单独上色时传（图形密码等每个图案有自己的颜色） */
+  style?: CSSProperties
 }
 
-export function Icon({ name, size = 20, filled = false, className }: IconProps) {
+export function Icon({ name, size = 20, filled = false, className, style }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -206,6 +263,7 @@ export function Icon({ name, size = 20, filled = false, className }: IconProps) 
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      style={style}
       aria-hidden
     >
       {PATHS[name]}

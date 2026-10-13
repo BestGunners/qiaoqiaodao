@@ -5,7 +5,8 @@ import { Icon } from '@/components/icons/Icon'
 import { Modal } from '@/components/common/Modal'
 import { MusicToggle } from '@/components/common/MusicToggle'
 import { Mascot } from '@/components/mascot/Mascot'
-import { AVATARS, PATTERN_ICONS, getAvatar } from '@/data/avatars'
+import { AvatarFace } from '@/components/child/AvatarFace'
+import { AVATARS, PATTERN_ICONS, getAvatar, getPatternIcon } from '@/data/avatars'
 import { sfx } from '@/engine/sfx'
 import { AGE_OPTIONS, DEFAULT_AGE, useChildStore, type ChildProfile } from '@/store/childStore'
 import { cn } from '@/utils/cn'
@@ -129,12 +130,7 @@ export default function LoginPage() {
                     onClick={() => startLogin(profile)}
                     className="flex flex-col items-center gap-2"
                   >
-                    <span
-                      className="flex h-16 w-16 items-center justify-center rounded-kid text-4xl"
-                      style={{ backgroundColor: `${avatar.color}33` }}
-                    >
-                      {avatar.emoji}
-                    </span>
+                    <AvatarFace avatar={avatar} size={64} />
                     <span className="text-lg font-extrabold">{profile.nickname}</span>
                     <span className="text-xs font-bold text-ink-soft">
                       {avatar.name} · {profile.age} 岁
@@ -189,7 +185,7 @@ export default function LoginPage() {
 
             <div className="space-y-2">
               <div className="text-center text-sm font-extrabold text-ink-soft">选一个头像</div>
-              <div className="grid grid-cols-5 gap-2 sm:grid-cols-7 lg:grid-cols-9">
+              <div className="grid grid-cols-5 gap-2 sm:grid-cols-10">
                 {AVATARS.map((avatar) => (
                   <button
                     key={avatar.id}
@@ -200,13 +196,13 @@ export default function LoginPage() {
                       setDraft((current) => ({ ...current, avatarId: avatar.id }))
                     }}
                     className={cn(
-                      'flex aspect-square items-center justify-center rounded-xl border text-2xl transition sm:text-3xl',
+                      'flex aspect-square items-center justify-center rounded-xl border p-1 transition',
                       draft.avatarId === avatar.id
                         ? 'anim-pop-in border-brand-500 bg-brand-50 shadow-pop'
                         : 'border-brand-200 bg-white hover:-translate-y-1',
                     )}
                   >
-                    {avatar.emoji}
+                    <AvatarFace avatar={avatar} className="h-full w-full" />
                   </button>
                 ))}
               </div>
@@ -283,7 +279,15 @@ export default function LoginPage() {
                     : 'border-brand-200 bg-white/60 text-ink-soft/40',
                 )}
               >
-                {pattern[index] ?? '·'}
+                {pattern[index] ? (
+                  <Icon
+                    name={getPatternIcon(pattern[index]).id}
+                    size={28}
+                    style={{ color: getPatternIcon(pattern[index]).color }}
+                  />
+                ) : (
+                  '·'
+                )}
               </span>
             ))}
           </div>
@@ -291,13 +295,13 @@ export default function LoginPage() {
           <div className="grid grid-cols-4 gap-3 sm:grid-cols-6">
             {PATTERN_ICONS.map((icon) => (
               <button
-                key={icon}
+                key={icon.id}
                 type="button"
                 data-no-click-sound
-                onClick={() => pickIcon(icon)}
-                className="flex h-16 w-16 items-center justify-center rounded-xl border border-surface-line bg-white text-3xl transition hover:-translate-y-1 hover:border-brand-300"
+                onClick={() => pickIcon(icon.id)}
+                className="flex h-16 w-16 items-center justify-center rounded-xl border border-surface-line bg-white transition hover:-translate-y-1 hover:border-brand-300"
               >
-                {icon}
+                <Icon name={icon.id} size={30} style={{ color: icon.color }} />
               </button>
             ))}
           </div>

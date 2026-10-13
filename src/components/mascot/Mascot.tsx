@@ -1,14 +1,15 @@
+import { Icon, type IconName } from '@/components/icons/Icon'
 import { assetUrl } from '@/utils/asset'
 import { cn } from '@/utils/cn'
 
 export type MascotMood = 'idle' | 'happy' | 'oops' | 'cheer' | 'think'
 
-const MOOD_STYLE: Record<MascotMood, { animation: string; badge?: string }> = {
+const MOOD_STYLE: Record<MascotMood, { animation: string; badge?: IconName }> = {
   idle: { animation: 'anim-float' },
   happy: { animation: 'anim-bounce-soft' },
-  oops: { animation: 'anim-wiggle', badge: '😅' },
-  cheer: { animation: 'anim-jump', badge: '🎉' },
-  think: { animation: 'anim-float', badge: '💭' },
+  oops: { animation: 'anim-wiggle', badge: 'droplet' },
+  cheer: { animation: 'anim-jump', badge: 'sparkle' },
+  think: { animation: 'anim-float', badge: 'lightbulb' },
 }
 
 export interface MascotProps {
@@ -39,10 +40,10 @@ export function Mascot({ mood = 'idle', size = 96, className }: MascotProps) {
       />
       {style.badge ? (
         <span
-          className="anim-pop-in absolute -right-1 -top-1 text-base sm:text-lg"
+          className="anim-pop-in absolute -right-1.5 -top-1.5 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-white text-brand-600 shadow-[0_2px_6px_rgba(18,32,58,0.18)]"
           aria-hidden
         >
-          {style.badge}
+          <Icon name={style.badge} size={15} />
         </span>
       ) : null}
     </span>

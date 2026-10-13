@@ -63,6 +63,9 @@ export function rankBy(entries: RankEntry[], metric: RankingMetric): RankEntry[]
   })
 }
 
-export function medalFor(index: number): string | null {
-  return ['🥇', '🥈', '🥉'][index] ?? null
+export type MedalKind = 'gold' | 'silver' | 'bronze'
+
+/** 前三名的奖牌等级；第 4 名及以后没有奖牌（界面用自己的矢量奖牌画）。 */
+export function medalFor(index: number): MedalKind | null {
+  return (['gold', 'silver', 'bronze'] as MedalKind[])[index] ?? null
 }

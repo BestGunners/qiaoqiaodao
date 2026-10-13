@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '@/components/icons/Icon'
 import { ProgressBar } from '@/components/common/ProgressBar'
+import { AvatarFace } from '@/components/child/AvatarFace'
 import { MusicToggle } from '@/components/common/MusicToggle'
 import { getAvatar } from '@/data/avatars'
 import { STAGES } from '@/data/courses'
@@ -35,12 +36,7 @@ export function KidHeader({ showMapLink = true }: KidHeaderProps) {
   return (
     <header className="flex flex-wrap items-center justify-between gap-3 rounded-kid border border-surface-line bg-white px-4 py-3 shadow-[0_1px_2px_rgba(18,32,58,0.04)]">
       <div className="flex items-center gap-3">
-        <span
-          className="flex h-11 w-11 items-center justify-center rounded-xl text-2xl"
-          style={{ backgroundColor: `${avatar.color}22` }}
-        >
-          {avatar.emoji}
-        </span>
+        <AvatarFace avatar={avatar} size={44} />
         <div className="leading-tight">
           <div className="flex items-center gap-2">
             <span className="text-lg font-extrabold">{child.nickname}</span>

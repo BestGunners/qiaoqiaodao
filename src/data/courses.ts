@@ -286,7 +286,7 @@ export const STAGES: Stage[] = [
     code: 'keyboard-basics',
     title: '认识键盘',
     subtitle: '坐姿、手位、每根手指管哪些键',
-    emoji: '⌨️',
+    icon: 'keyboard',
     gradient: 'from-brand-400/70 to-candy-mint/70',
     available: true,
     lessons: [
@@ -301,7 +301,7 @@ export const STAGES: Stage[] = [
     code: 'keyboard-meadow',
     title: '键盘启蒙',
     subtitle: '把基准行练熟：归位、节奏、中排小词',
-    emoji: '🌱',
+    icon: 'leaf',
     gradient: 'from-candy-green/80 to-candy-mint/70',
     available: true,
     lessons: [
@@ -316,7 +316,7 @@ export const STAGES: Stage[] = [
     code: 'word-forest',
     title: '英文单词输入',
     subtitle: '上排、下排、数字与高频词',
-    emoji: '🌳',
+    icon: 'book',
     gradient: 'from-candy-mint/70 to-brand-300/70',
     available: true,
     lessons: [
@@ -332,7 +332,7 @@ export const STAGES: Stage[] = [
     code: 'symbol-volcano',
     title: '代码符号输入',
     subtitle: '括号、运算符、冒号与引号',
-    emoji: '🌋',
+    icon: 'braces',
     gradient: 'from-candy-orange/70 to-candy-pink/70',
     available: true,
     lessons: [
@@ -348,7 +348,7 @@ export const STAGES: Stage[] = [
     code: 'code-factory',
     title: '简单代码输入',
     subtitle: '用 C++ 敲出真正的代码',
-    emoji: '🏭',
+    icon: 'code',
     gradient: 'from-brand-300/70 to-candy-purple/70',
     available: true,
     lessons: [
@@ -364,7 +364,7 @@ export const STAGES: Stage[] = [
     code: 'game-island',
     title: '小游戏编程',
     subtitle: '用 C++ 做出自己的小游戏',
-    emoji: '🎮',
+    icon: 'gamepad',
     gradient: 'from-candy-purple/70 to-candy-pink/70',
     available: true,
     lessons: [
@@ -380,7 +380,7 @@ export const STAGES: Stage[] = [
     code: 'chinese-garden',
     title: '中文打字',
     subtitle: '用拼音打出汉字、词语和古诗',
-    emoji: '📜',
+    icon: 'pencil',
     gradient: 'from-ember-300/70 to-candy-orange/70',
     available: true,
     lessons: [
@@ -396,7 +396,7 @@ export const STAGES: Stage[] = [
     code: 'textbook-sentences',
     title: '课文长句',
     subtitle: '不给拼音，靠自己把整句话打出来',
-    emoji: '📖',
+    icon: 'book',
     gradient: 'from-ember-300/70 to-candy-orange/70',
     available: true,
     lessons: STAGE_8_SEEDS.map((seed, index) => buildLesson(8, index + 1, seed)),

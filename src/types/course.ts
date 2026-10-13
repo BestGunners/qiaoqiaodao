@@ -1,4 +1,5 @@
 import type { FingerId } from '@/types/typing'
+import type { IconName } from '@/components/icons/Icon'
 
 /** 关卡类型：MVP 只实现打字类，其余类型预留，便于后续扩展课程系统。 */
 export type LessonKind = 'intro' | 'letters' | 'words' | 'symbols' | 'code' | 'game'
@@ -38,7 +39,8 @@ export interface Stage {
   code: string
   title: string
   subtitle: string
-  emoji: string
+  /** 岛屿图标：线性图标，不用 emoji */
+  icon: IconName
   /** Tailwind 渐变类名，控制地图岛屿配色 */
   gradient: string
   /** MVP 阶段：只有阶段 1 开放，其余显示为"即将开放" */
@@ -58,7 +60,10 @@ export interface Badge {
   id: string
   title: string
   description: string
-  emoji: string
+  /** 徽章图案：线性图标，不用 emoji */
+  icon: IconName
+  /** 徽章底色，用在圆形徽章上 */
+  color: string
   /** 徽章类别：技能 / 坚持 / 突破 / 创造 */
   category: 'skill' | 'habit' | 'breakthrough' | 'create'
 }

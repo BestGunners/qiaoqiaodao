@@ -7,19 +7,18 @@ export interface FingerMeta {
   hand: Hand
   /** 低饱和度儿童向配色，键盘分区与提示动画共用 */
   color: string
-  emoji: string
 }
 
 export const FINGERS: Record<FingerId, FingerMeta> = {
-  'left-pinky': { id: 'left-pinky', label: '左手小指', hand: 'left', color: '#f97362', emoji: '🤙' },
-  'left-ring': { id: 'left-ring', label: '左手无名指', hand: 'left', color: '#f9a826', emoji: '💛' },
-  'left-middle': { id: 'left-middle', label: '左手中指', hand: 'left', color: '#f2d544', emoji: '💚' },
-  'left-index': { id: 'left-index', label: '左手食指', hand: 'left', color: '#5cc98a', emoji: '🤞' },
-  'right-index': { id: 'right-index', label: '右手食指', hand: 'right', color: '#46c9c0', emoji: '🤞' },
-  'right-middle': { id: 'right-middle', label: '右手中指', hand: 'right', color: '#4f9cf9', emoji: '💙' },
-  'right-ring': { id: 'right-ring', label: '右手无名指', hand: 'right', color: '#9a7bf0', emoji: '💜' },
-  'right-pinky': { id: 'right-pinky', label: '右手小指', hand: 'right', color: '#ef7bc0', emoji: '🤙' },
-  thumb: { id: 'thumb', label: '拇指', hand: 'right', color: '#94a3b8', emoji: '👍' },
+  'left-pinky': { id: 'left-pinky', label: '左手小指', hand: 'left', color: '#f97362' },
+  'left-ring': { id: 'left-ring', label: '左手无名指', hand: 'left', color: '#f9a826' },
+  'left-middle': { id: 'left-middle', label: '左手中指', hand: 'left', color: '#f2d544' },
+  'left-index': { id: 'left-index', label: '左手食指', hand: 'left', color: '#5cc98a' },
+  'right-index': { id: 'right-index', label: '右手食指', hand: 'right', color: '#46c9c0' },
+  'right-middle': { id: 'right-middle', label: '右手中指', hand: 'right', color: '#4f9cf9' },
+  'right-ring': { id: 'right-ring', label: '右手无名指', hand: 'right', color: '#9a7bf0' },
+  'right-pinky': { id: 'right-pinky', label: '右手小指', hand: 'right', color: '#ef7bc0' },
+  thumb: { id: 'thumb', label: '拇指', hand: 'right', color: '#94a3b8' },
 }
 
 const key = (

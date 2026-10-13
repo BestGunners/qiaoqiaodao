@@ -1,5 +1,6 @@
 import { Card } from '@/components/common/Card'
 import { Icon } from '@/components/icons/Icon'
+import { AvatarFace } from '@/components/child/AvatarFace'
 import { getAvatar } from '@/data/avatars'
 import { getBadge } from '@/data/badges'
 import type { ChildProfile } from '@/store/childStore'
@@ -11,19 +12,14 @@ export interface MapSummaryProps {
   badgeIds: string[]
 }
 
-/** 地图顶部概览：头像 + 三个读数 + 徽章（徽章保留 emoji，它们是贴纸）。 */
+/** 地图顶部概览：头像 + 三个读数 + 徽章，图案全部用线性图标。 */
 export function MapSummary({ child, totalStars, streakDays, badgeIds }: MapSummaryProps) {
   const avatar = getAvatar(child.avatarId)
 
   return (
     <Card className="flex flex-wrap items-center justify-between gap-4">
       <div className="flex items-center gap-4">
-        <span
-          className="flex h-14 w-14 items-center justify-center rounded-xl text-3xl"
-          style={{ backgroundColor: `${avatar.color}22` }}
-        >
-          {avatar.emoji}
-        </span>
+        <AvatarFace avatar={avatar} size={56} />
         <div className="leading-tight">
           <div className="text-xl font-extrabold">{child.nickname}的学习地图</div>
           <div className="text-sm font-semibold text-ink-soft">
@@ -54,8 +50,13 @@ export function MapSummary({ child, totalStars, streakDays, badgeIds }: MapSumma
               const badge = getBadge(id)
               if (!badge) return null
               return (
-                <span key={id} title={`${badge.title}：${badge.description}`} className="text-lg">
-                  {badge.emoji}
+                <span
+                  key={id}
+                  title={`${badge.title}：${badge.description}`}
+                  className="flex h-7 w-7 items-center justify-center rounded-full text-white"
+                  style={{ backgroundColor: badge.color }}
+                >
+                  <Icon name={badge.icon} size={15} />
                 </span>
               )
             })

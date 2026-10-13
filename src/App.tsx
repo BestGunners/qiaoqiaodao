@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { BackgroundMusic } from '@/components/fx/BackgroundMusic'
+import { CursorFX } from '@/components/fx/CursorFX'
 import RequireChild from '@/components/layout/RequireChild'
 import { useDisplayPreferences } from '@/hooks/useDisplayPreferences'
 import { useGlobalClickSound } from '@/hooks/useGlobalClickSound'
@@ -24,6 +25,8 @@ export default function App() {
     <>
       {/* 背景音乐：只在非打字页面播放，开关和音量都在设置里 */}
       <BackgroundMusic />
+      {/* 鼠标特效：自绘光标 + 悬停变色 + 移动火花（设置里可关） */}
+      <CursorFX />
       <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />

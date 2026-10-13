@@ -4,6 +4,7 @@ import { Icon, type IconName } from '@/components/icons/Icon'
 import { AppShell } from '@/components/layout/AppShell'
 import { KidHeader } from '@/components/layout/KidHeader'
 import { Mascot } from '@/components/mascot/Mascot'
+import { AvatarFace } from '@/components/child/AvatarFace'
 import { getAvatar } from '@/data/avatars'
 import { STAGES } from '@/data/courses'
 import { buildRankEntries, metricOf, rankBy, type RankingMetric } from '@/engine/ranking'
@@ -92,12 +93,7 @@ export default function RankingPage() {
                   {index + 1}
                 </span>
 
-                <span
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-2xl"
-                  style={{ backgroundColor: `${avatar.color}22` }}
-                >
-                  {avatar.emoji}
-                </span>
+                <AvatarFace avatar={avatar} size={44} className="shrink-0" />
 
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">

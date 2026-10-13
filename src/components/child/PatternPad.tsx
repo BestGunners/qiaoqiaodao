@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import { Icon } from '@/components/icons/Icon'
-import { PATTERN_ICONS } from '@/data/avatars'
+import { PATTERN_ICONS, getPatternIcon } from '@/data/avatars'
 import { sfx } from '@/engine/sfx'
 import { cn } from '@/utils/cn'
 
@@ -77,7 +77,15 @@ export function PatternPad({
                 : 'border-brand-200 bg-white/60 text-ink-soft/40',
             )}
           >
-            {pattern[index] ?? '·'}
+            {pattern[index] ? (
+              <Icon
+                name={getPatternIcon(pattern[index]).id}
+                size={26}
+                style={{ color: getPatternIcon(pattern[index]).color }}
+              />
+            ) : (
+              '·'
+            )}
           </span>
         ))}
       </div>
@@ -85,13 +93,13 @@ export function PatternPad({
       <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
         {PATTERN_ICONS.map((icon) => (
           <button
-            key={icon}
+            key={icon.id}
             type="button"
             data-no-click-sound
-            onClick={() => pickIcon(icon)}
-            className="flex h-14 w-14 items-center justify-center rounded-kid border-b-4 border-brand-200 bg-white text-2xl transition hover:-translate-y-1 hover:border-brand-400"
+            onClick={() => pickIcon(icon.id)}
+            className="flex h-14 w-14 items-center justify-center rounded-kid border-b-4 border-brand-200 bg-white transition hover:-translate-y-1 hover:border-brand-400"
           >
-            {icon}
+            <Icon name={icon.id} size={26} style={{ color: icon.color }} />
           </button>
         ))}
       </div>

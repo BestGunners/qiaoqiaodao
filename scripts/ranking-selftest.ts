@@ -97,9 +97,9 @@ console.log('\n4. 并列与奖牌')
   const ranked = rankBy(buildRankEntries(tied, tiedProgress, STAGES), 'xp')
   check('并列时按昵称稳定排序', ranked.map((entry) => entry.nickname).join(',') === '安安,小明', ranked.map((entry) => entry.nickname).join(','))
 
-  check('第一名是金牌', medalFor(0) === '🥇')
-  check('第二名是银牌', medalFor(1) === '🥈')
-  check('第三名是铜牌', medalFor(2) === '🥉')
+  check('第一名是金牌', medalFor(0) === 'gold')
+  check('第二名是银牌', medalFor(1) === 'silver')
+  check('第三名是铜牌', medalFor(2) === 'bronze')
   check('第四名没有奖牌', medalFor(3) === null)
 }
 

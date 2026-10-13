@@ -19,6 +19,8 @@ interface SettingsState {
   fontStyle: FontStyle
   /** 字体大小倍率：0.85 - 1.4，默认 1 */
   fontScale: number
+  /** 鼠标特效：光标跟着鼠标走、悬停变色、移动撒火花，默认开 */
+  cursorFxEnabled: boolean
   toggleSound: () => void
   toggleClickSounds: () => void
   setVolume: (value: number) => void
@@ -27,6 +29,7 @@ interface SettingsState {
   setBgmVolume: (value: number) => void
   setFontStyle: (value: FontStyle) => void
   setFontScale: (value: number) => void
+  toggleCursorFx: () => void
 }
 
 /** 孩子的偏好设置：声音开关与音量（校内使用时可以一键静音）。 */
@@ -41,6 +44,7 @@ export const useSettingsStore = create<SettingsState>()(
       bgmVolume: 0.35,
       fontStyle: 'rounded',
       fontScale: 1,
+      cursorFxEnabled: true,
       toggleSound: () => set({ soundEnabled: !get().soundEnabled }),
       toggleKeyboard: () => set({ keyboardVisible: !get().keyboardVisible }),
       toggleClickSounds: () => set({ clickSoundsEnabled: !get().clickSoundsEnabled }),
@@ -49,6 +53,7 @@ export const useSettingsStore = create<SettingsState>()(
       setBgmVolume: (value) => set({ bgmVolume: Math.min(1, Math.max(0, value)) }),
       setFontStyle: (value) => set({ fontStyle: value }),
       setFontScale: (value) => set({ fontScale: Math.min(1.4, Math.max(0.85, value)) }),
+      toggleCursorFx: () => set({ cursorFxEnabled: !get().cursorFxEnabled }),
     }),
     { name: 'codekids.settings' },
   ),

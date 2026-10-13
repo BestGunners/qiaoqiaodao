@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { LEGACY_AVATAR_IDS, LEGACY_PATTERN_ICONS } from '../data/avatars.ts'
 import { persist } from 'zustand/middleware'
 
 /** 用于展示与难度分层的年龄段：由具体年龄推导 */
@@ -100,7 +101,7 @@ export const useChildStore = create<ChildState>()(
     }),
     {
       name: 'codekids.child',
-      version: 1,
+      version: 2,
       migrate: (persisted) => {
         const legacy = persisted as
           | { profiles?: LegacyChildProfile[]; currentChildId?: string | null }
@@ -113,6 +114,9 @@ export const useChildStore = create<ChildState>()(
           profiles: legacy.profiles.map((profile) => ({
             ...profile,
             age: profile.age ?? (profile.ageBand === '6-7' || profile.ageBand === '5-7' ? 7 : 9),
+            // 老头像是 emoji 动物，老图案密码也是 emoji，都换成新的 id / 图标
+            avatarId: LEGACY_AVATAR_IDS[profile.avatarId] ?? profile.avatarId,
+            pattern: (profile.pattern ?? []).map((icon) => LEGACY_PATTERN_ICONS[icon] ?? icon),
           })),
         } as ChildState
       },

@@ -186,7 +186,12 @@ export function TypingResult({
                     key={id}
                     className="anim-pop-in flex items-center gap-2 rounded-2xl bg-[#f2edff] px-3 py-1.5 text-sm font-extrabold text-[#5b45a8]"
                   >
-                    <span className="text-xl">{badge.emoji}</span>
+                    <span
+                      className="flex h-6 w-6 items-center justify-center rounded-full text-white"
+                      style={{ backgroundColor: badge.color }}
+                    >
+                      <Icon name={badge.icon} size={14} />
+                    </span>
                     {badge.title}
                   </span>
                 )
